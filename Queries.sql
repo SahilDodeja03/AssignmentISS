@@ -23,35 +23,31 @@ CREATE TABLE employee(
 	FOREIGN KEY(manager_id) REFERENCES manager(manager_id)
 )
 
-INSERT INTO department VALUES('HR')
-INSERT INTO department VALUES('Finance')
-INSERT INTO department VALUES('Technical')
 INSERT INTO department VALUES('Sales')
+INSERT INTO department VALUES('HR')
+INSERT INTO department VALUES('Technical')
+INSERT INTO department VALUES('Finance')
 
 SELECT * FROM department
 
-INSERT INTO manager VALUES('Rohit', 'Valecha', 1, 70000)
-INSERT INTO manager VALUES('Nikhil', 'Valecha', 2, 76000)
-INSERT INTO manager VALUES('Kriti', 'Mulchandani', 3, 66000)
-INSERT INTO manager VALUES('Preeti', 'Mulwani', 4, 85000)
+INSERT INTO manager VALUES('Naksh', 'Dodeja', 1, 71000)
+INSERT INTO manager VALUES('Nikhil', 'khatwani', 2, 76000)
+INSERT INTO manager VALUES('muskan', 'Mulchandani', 3, 66000)
+INSERT INTO manager VALUES('varsha', 'chandwani', 4, 85000)
 INSERT INTO manager VALUES('Kashish', 'Bajaj', 3, 90000)
 
 SELECT * FROM manager
 
-INSERT INTO employee VALUES('Syesha', 'Chugh', 78000, 1, 1)
+INSERT INTO employee VALUES('Vridhi', 'Chugh', 78000, 1, 1)
+INSERT INTO employee VALUES('Sahil', 'Kishnani', 52000, 4,  4)
 INSERT INTO employee VALUES('James', 'Bond', 98000, 2, 2)
+INSERT INTO employee VALUES('Rahul', 'Bhagtani', 65000, 3,  5)
 INSERT INTO employee VALUES('John', 'King', 22000, 3,  3)
-INSERT INTO employee VALUES('Viren', 'Bajaj', 43000, 4,  4)
-INSERT INTO employee VALUES('Lalit', 'Bhagtani', 65000, 3,  5)
-INSERT INTO employee VALUES('Siya', 'Sukheja', 80000, 3,  5)
-INSERT INTO employee VALUES('Jyoti', 'Bhagtani', 52000, 3,  3)
-INSERT INTO employee VALUES('Sahil', 'Bhagtani', 52000, 4,  4)
+INSERT INTO employee VALUES('Riya', 'Bajaj', 43000, 4,  4)
+INSERT INTO employee VALUES('Siya', 'Kishnani', 80000, 3,  5)
+INSERT INTO employee VALUES('Jyoti', 'Narang', 52000, 3,  3)
 
 SELECT * FROM employee
-
-
-SELECT COUNT(DISTINCT(salary)) AS salary 
-FROM employee
 
 
 SELECT first_name, salary 
@@ -61,17 +57,23 @@ WHERE salary>70000
 
 SELECT first_name, last_name, salary
 FROM employee
-WHERE salary>60000 AND manager_id=5
-
-
-SELECT first_name, last_name, salary
-FROM employee
 WHERE salary>60000 OR manager_id=5
+
+
+
+SELECT COUNT(DISTINCT(salary)) AS salary 
+FROM employee
 
 
 SELECT *
 FROM employee
 ORDER BY salary DESC
+
+
+SELECT first_name, last_name, salary
+FROM employee
+WHERE salary>60000 AND manager_id=5
+
 
 
 UPDATE manager
@@ -89,24 +91,20 @@ WHERE salary<30000
 SELECT * FROM employee
 
 
-SELECT TOP 2 first_name, salary
-FROM employee
-ORDER BY salary DESC
-
 
 SELECT * 
 FROM employee
-WHERE first_name LIKE 'j%'
+WHERE first_name LIKE 's%'
 
 
 SELECT *
 FROM employee
-WHERE last_name IN ('Bhagtani', 'Bajaj')
+WHERE last_name IN ('Kishnani', 'Narang')
 
 
 SELECT first_name, last_name, salary
 FROM employee
-WHERE salary BETWEEN 40000 AND 60000
+WHERE salary BETWEEN 45000 AND 55000
 
 
 SELECT SUM(salary) AS sum_of_salary
@@ -120,13 +118,23 @@ GROUP BY department_id
 ORDER BY sum_of_salary DESC
 
 
-SELECT * FROM manager
-SELECT * FROM department
-SELECT * FROM employee
+SELECT TOP 2 first_name, salary
+FROM employee
+ORDER BY salary DESC
 
 
 DELETE FROM employee
 WHERE manager_id=3
+
+
+SELECT employee_id, first_name, last_name, salary
+INTO high_salary
+FROM employee
+WHERE salary>70000
+
+
+SELECT * FROM high_salary
+
 
 
 SELECT employee.first_name, employee.last_name, employee.salary, department.department_name
@@ -144,16 +152,9 @@ FROM manager
 FULL JOIN employee ON employee.manager_id=manager.manager_id
 
 
-SELECT employee_id, first_name, last_name, salary
-INTO high_salary
-FROM employee
-WHERE salary>70000
 
 
-SELECT * FROM high_salary
-
-
-CREATE TABLE employee_2009(
+CREATE TABLE employee_2015(
 	employee_id INT PRIMARY KEY IDENTITY(1,1),
 	first_name VARCHAR(MAX) NOT NULL,
 	last_name VARCHAR(MAX) NOT NULL, 
@@ -165,7 +166,7 @@ CREATE TABLE employee_2009(
 )
 
 
-CREATE TABLE employee_2011(
+CREATE TABLE employee_2017(
 	employee_id INT PRIMARY KEY IDENTITY(1,1),
 	first_name VARCHAR(MAX) NOT NULL,
 	last_name VARCHAR(MAX) NOT NULL, 
@@ -177,18 +178,18 @@ CREATE TABLE employee_2011(
 )
 
 
-ALTER TABLE employee_2009 
+ALTER TABLE employee_2015
 ADD email VARCHAR(MAX)
 
 
-ALTER TABLE employee_2009
+ALTER TABLE employee_2015
 ADD DateOfBirth date
 
 
-SELECT * FROM employee_2009
+SELECT * FROM employee_2015
 
 
-ALTER TABLE employee_2009
+ALTER TABLE employee_2015
 DROP COLUMN DateOfBirth
 
 
@@ -199,14 +200,14 @@ WHERE salary>40000
 
 
 
-CREATE PROCEDURE sp_getDetailsOfEmployee
-	@employee_id INT
+CREATE PROCEDURE sp_getDetailsOfManager
+	@manager_id INT
 AS
 BEGIN
-	SELECT * FROM EMPLOYEE
-	WHERE employee_id=@employee_id
+	SELECT * FROM Manager
+	WHERE manager_id=@manager_id
 END
 
 
-sp_getDetailsOfEmployee 4
+sp_getDetailsOfManager 5
 
